@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
+
+use App\User;
+use Mail;
+use App\Mail\VerifyAccountMail;
+use Illuminate\Http\Request;
+use Session;
+
 
 class RegisterController extends Controller
 {
@@ -62,10 +70,85 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        Session::flash('status',"Registered!Verify your email to activate your account");
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'Verifytoken'=>str::random(40),
         ]);
+
+        $thisUser = User::findOrFail($user->id);
+    $this->sendEmail($thisUser);
+    return  $user;
     }
+
+
+    public function sendEmail($thisUser){
+            Mail::to($thisUser['email'])->send(new VerifyAccountMail($thisUser));
+    }
+
+    public function verifyEmailFirst(){
+        return view('email.verifyEmailFirst');
+    }
+
+
+    public function sendEmailDone($email,$Verifytoken){
+
+
+        $user = User::where(['email'=>$email,'Verifytoken'=>$Verifytoken])->first();
+
+        if($user){
+           return  user::where(['email'=>$email,'Verifytoken'=>$Verifytoken])->update(['is_activated'=>'1','Verifytoken'=>NULL]);
+        }else{
+            return 'User not found';
+        }
+    }
+    /*public function register(Request $request){
+
+        $input = $request->all();
+
+        $validator = $this->validator($input);
+
+        if($validator->passes()){
+            $user = $this->create($input)->toArray();
+            $user['link'] = str_random(30);
+
+            DB::table('users_activations')->insert(['user_id' => $user['id'],'token' => $user['link']]);
+
+            /*Mail::send('mail.activation', $user, function($message) use ($user){
+                $message -> to($user['email']);
+                $message -> subject('OneLove.com-Activation Code');
+            });*/
+
+           /* Mail::to($user['email'])->send(new Email());
+             return redirect()->to('login')->with('Success','We sent activation code,please check your email');
+        }
+
+        return back()->with('Error',$validator->errors());
+    }
+ 
+        //user activation function-check whether the new user is activated or not
+        public function userActivation($token){
+            $check =DB::table('users_activations')->where('token',$token)->first();
+
+            if(!is_empty($check)){
+
+                $user=User::find($check->user_id);
+                if($user->is_activated==1){
+
+                    return redirect()->to('login')->with('Success','User is already activated');
+
+                }
+
+                $user->update(['is_activated'=>1]);
+                DB::table('users_activations')->where('token')->delete();
+
+                return redirect()->to('login')->with('Success','User activated successfully');
+                
+            }
+                return redirect()->to('login')->with('warning','Token Invalid');
+        }*/
+
 }

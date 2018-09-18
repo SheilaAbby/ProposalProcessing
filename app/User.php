@@ -17,13 +17,9 @@ class User extends Authenticatable
      */
 
     //
-    const ADMIN_TYPE='admin';
-    public function isAdmin(){
-        return  $this->type===self::ADMIN_TYPE;
-    }
-
+   
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','is_activated','Verifytoken'
     ];
 
     /**
@@ -34,5 +30,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function admin(){
+        if($this->is_admin){
+        return true;
+        }
+
+        return false;
+    }
 
    }

@@ -16,15 +16,15 @@ class CreateProposalsTable extends Migration
         Schema::create('proposals', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('organization:name');
+            $table->string('organization_name');
             $table->string('address');
             $table->string('phone');
             $table->string('email');
-            $table->string('submitted_by:name');
+            $table->string('submitted_by_name');
             $table->text('summary');
             $table->text('background');
             $table->text('activities');
-            $table->text('budget');
+            $table->string('budget');
             $table->timestamps();
         });
     }

@@ -17,7 +17,9 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('is_admin')->default(0);
+            $table->boolean('is_admin')->default(0);
+            $table->boolean('is_activated')->default(0);
+             $table->string('Verifytoken')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
