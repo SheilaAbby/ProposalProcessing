@@ -21,7 +21,11 @@
                 <div class="card-body">
                  <h1 class="card-title pricing-card-title">Organisation Name<small class="text-muted">{{$proposal->organisation_name}}</small></h1>
                 <p>{{$proposal->summary}}</p>
-            <button type="button" class="btn btn-primary">Download Budget</button><br></br>
+
+           
+            <button type="button" class="btn btn-primary">
+             <i class="glyphicon glyphicon-download">Download Budget</i></button><br></br>
+         
             <button type="button" class="btn btn-primary">Move to Stage1</button>
             <button type="button" class="btn btn-danger btn-primary">Reject</button>
 

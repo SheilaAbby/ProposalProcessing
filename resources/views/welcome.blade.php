@@ -13,10 +13,12 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
+               background-image: url("/image/Proposal.jpg");
+               background-repeat:no-repeat;
+               background-size:1600px;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
-                font-weight: 100;
+                font-weight:200;
                 height: 100vh;
                 margin: 0;
             }
@@ -40,6 +42,7 @@
                 right: 10px;
                 top: 18px;
             }
+
 
             .content {
                 text-align: center;
@@ -69,7 +72,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}"><big>Home</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
                         <a href="{{ route('register') }}">Register</a>
@@ -78,8 +81,10 @@
             @endif
 
             <div class="content">
+                
                 <div class="title m-b-md">
-                    OneLove
+                    OneLove<br>
+                    Proposal Submission Site
                 </div>
                    
                 </div>

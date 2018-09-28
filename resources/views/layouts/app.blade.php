@@ -12,10 +12,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/mycss')}}>
+
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
+        <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
             <div class="container">
                 <div class="navbar-header">
 
@@ -37,6 +39,22 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
+
+                        <div class="dropdown">
+                <button class="dropbtn">Contact Us</button>
+                 <div class="dropdown-content">
+                         <b>Call:0717711324
+                         Email:onelove@onelove.com</b>
+                    </div>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                     <div class="dropdown">
+                <button class="dropbtn">About Us</button>
+                 <div class="dropdown-content">
+                         <b>We are a Non-Profit Organisation<br>
+                         aimed at making the world a better place.</b>
+                    </div>
+                    </div>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -71,10 +89,25 @@
             </div>
         </nav>
 
+        <div class="container">
+
+            <div class="flash-message">
+  @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+    @if(Session::has('alert-' . $msg))
+    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
+    @endif
+  @endforeach
+</div>
+
         @yield('content')
+
+        @include('includes.footer')
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+   
+
 </body>
 </html>

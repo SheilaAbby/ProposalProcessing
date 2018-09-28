@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Proposal;
 
 
 class User extends Authenticatable
@@ -19,7 +20,7 @@ class User extends Authenticatable
     //
    
     protected $fillable = [
-        'name', 'email', 'password','is_activated','Verifytoken'
+        'name', 'email', 'password','Verifytoken'
     ];
 
     /**
@@ -31,6 +32,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    //function to determine if user is admin or an applicant
+
     public function admin(){
         if($this->is_admin){
         return true;
@@ -38,5 +41,11 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function proposal()
+    {
+        return $this->hasOne('App\Proposal');
+    }
+
 
    }

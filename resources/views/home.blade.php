@@ -1,21 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" float="left">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading"><b>Applicant's Dashboard<b></div>
+<div class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4"> Welcome to OneLove,Proposal Submission site.</h1>
+      <p class="lead">If your proposal aims at making the world a better place,has the potential to benefit a non-profit organization like OneLove,and you are seeking a grant,feel free to submit your proposal for review.</p>
+    </div>
+   
+        <div class="col-md-6">
 
-                <div class="panel-body" >
+            <div class="panel panel-default">
+
+                <div class="panel-heading"><b>Create A Proposal<b></div>
+
+                <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">
                             {{ session('status') }}
                         </div>
                     @endif
 
+                            <div  id="form-hide" >
                     
-                         <form class="form-horizontal" method="POST" action="{{ route('proposals.store') }}" enctype="multipart/form-data">
+                         <form class="form-horizontal" method="POST" action="{{ route('proposals.store') }}" >
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -107,7 +114,7 @@
                             <label for="summary" class="col-md-4 control-label">Summary</label>
 
                             <div class="col-md-6">
-                                <textarea id="summary" type="text" class="form-control" name="summary" value="{{ old('summary') }}" required></textarea>
+                                <textarea col="5" rows="5"  id="summary" type="text" class="form-control" name="summary" value="{{ old('summary') }}" required></textarea>
 
                                 @if ($errors->has('summary'))
                                     <span class="help-block">
@@ -121,7 +128,7 @@
                             <label for="background" class="col-md-4 control-label">Background</label>
 
                             <div class="col-md-6">
-                                <textarea id="background" type="text" class="form-control" name="background" value="{{ old('background') }}" required></textarea>
+                                <textarea col="5" rows="5" id="background" type="text" class="form-control" name="background" value="{{ old('background') }}" required></textarea>
 
                                 @if ($errors->has('background'))
                                     <span class="help-block">
@@ -135,7 +142,7 @@
                             <label for="activities" class="col-md-4 control-label">Activities</label>
 
                             <div class="col-md-6">
-                                <textarea id="activities" type="text" class="form-control" name="activities" value="{{ old('activities') }}" required></textarea>
+                                <textarea col="5" rows="5" id="activities" type="text" class="form-control" name="activities" value="{{ old('activities') }}" required></textarea>
 
                                 @if ($errors->has('activities'))
                                     <span class="help-block">
@@ -149,8 +156,7 @@
                             <label for="budget" class="col-md-4 control-label">Budget</label>
 
                             <div class="col-md-6">
-                                <input id="budget" type="file" class="form-control form-input form-style-base" name="budget" value="{{ old('budget') }}" required accept="application/pdf">
-                                <h4>Upload Pdf</h4>
+                                <textarea id="budget" type="text" class="form-control form-input form-style-base" name="budget" value="{{ old('budget') }}" required ></textarea> 
 
                                 @if ($errors->has(''))
                                     <span class="help-block">
@@ -162,16 +168,68 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" name="submitButton" class="btn btn-primary" value="save-draft">
                                    Save as draft
+                                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                 <button type="submit"  id="Button2" name="submitButton" class="btn btn-primary" value="send" >
+                                  Send
                                 </button>
                             </div>
+                            </div>
+                        </form>
                         </div>
-                    </form>
+                   
+                </div>
 
                 </div>
             </div>
+
+             <div>
+               <a href="{{route('viewSavedDrafts')}}"><button float-right >See Saved Drafts</button></a>
         </div>
-    </div>
+
+<div class="container">
+     <b><h4 class="my-0 font-weight-normal">Accepted Proposal</h4></b>
+    
+          @if(count($acceptedProposal )>0)
+                @foreach($acceptedProposal as $proposal)
+              
+                    <b>Title :</b><p>{{$proposal->title}} </p><br>
+                    <b>Proposal :</b><p>{{$proposal->summary}} </p>
+             
+
+        @endforeach
+            @else
+                <p> You have no accepted Proposals yet.</p>
+        @endif
+
+    
+    
+            <b><h4 class="my-0 font-weight-normal">Rejected Proposal</h4></b>
+          
+          @if(count($rejectedProposal )>0)
+                @foreach($rejectedProposal as $proposal)
+              
+                  <b>Title: </b><p>{{$proposal->title}} </p><br>
+                 <b>Proposal:  </b><p>{{$proposal->summary}} </p>
+             
+
+        @endforeach
+            @else
+                <p> You have no rejected Proposals yet</p>
+        @endif
+
+          
 </div>
+</div>
+
+            
+        </div>
+
+        
+ 
+   
+
+
 @endsection

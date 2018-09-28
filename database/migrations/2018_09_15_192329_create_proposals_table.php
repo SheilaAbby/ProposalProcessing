@@ -15,16 +15,20 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('title');
             $table->string('organization_name');
             $table->string('address');
             $table->string('phone');
             $table->string('email');
-            $table->string('submitted_by_name');
             $table->text('summary');
+            $table->string('submitted_by_name');
             $table->text('background');
             $table->text('activities');
             $table->string('budget');
+            $table->timestamp('submitted_at')->nullable();
+            $table->string('Status')->default('Unprocessed');
             $table->timestamps();
         });
     }

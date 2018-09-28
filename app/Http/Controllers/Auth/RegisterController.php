@@ -71,7 +71,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        Session::flash('status',"Registered!Verify your email to activate your account");
+        Session::flash('alert-success',"Registered!Verify your email to activate your account.");
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
@@ -99,10 +99,11 @@ class RegisterController extends Controller
 
         $user = User::where(['email'=>$email,'Verifytoken'=>$Verifytoken])->first();
 
-        if($user){
-           return  user::where(['email'=>$email,'Verifytoken'=>$Verifytoken])->update(['is_activated'=>'1','Verifytoken'=>NULL]);
-        }else{
-            return 'User not found';
+        $user->update(['Verifytoken'=>NULL]);
+          Session::flash('alert-success','Success!Account Activated.Now login.');
+
+           return redirect()->route('login');
+
         }
     }
     /*public function register(Request $request){
@@ -151,4 +152,4 @@ class RegisterController extends Controller
                 return redirect()->to('login')->with('warning','Token Invalid');
         }*/
 
-}
+

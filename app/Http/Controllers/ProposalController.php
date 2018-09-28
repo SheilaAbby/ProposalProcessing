@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proposal;
+use App\User;
+use Notification;
+use App\Notifications\NewProposal;
+use Session;
+use Auth;
 
 class ProposalController extends Controller
 {
@@ -14,9 +19,7 @@ class ProposalController extends Controller
      */
     public function index()
     {
-        $proposals=Proposal::orderBy('id')->paginate(5);
-
-        return view('admin.dashboard',compact('proposals'))->with('i');
+        //
     }
 
     /**
@@ -37,8 +40,7 @@ class ProposalController extends Controller
      */
     public function store(Request $request)
     {
-         
-        $this->validate($request,[
+         $this->validate($request,[
             'title' => 'required|string|max:255',
             'organization_name'=>'required|string|max:255',
             'address'=>'required',
@@ -48,31 +50,21 @@ class ProposalController extends Controller
             'summary'=>'required',
             'background'=>'required',
             'activities'=>'required',
-            'budget'=>'required|max:10000|mimes:pdf'
+            'budget'=>'required|string|max:255'
+
+
 
            
         ]);
+        
 
-        //handle document upload
-        if($request->hasFile('budget')){
-            //get filename with the extension
-            $filenameWithExt=$request->file('budget')->getClientOriginalName();
-            //get the filename
-            $filename=pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            //GET THE EXT
-            $extension=$request->file('budget')->getClientOriginalExtension();
-            //filename to store
-            $fileNameToStore=$filename.'_'.time().'.'.$extension;
-            //upload image
-            $path=$request->file('budget')->storeAs('public/budgetDocs',$fileNameToStore);
+         switch($request->submitButton) {
 
+             case 'save-draft': 
+                    //action for save-draft.
+              $proposal=new Proposal;
 
-        }else{
-            $fileNameToStore='noDoc.pdf';
-        }
-
-            $proposal=new Proposal;
-
+            $proposal->user_id = Auth::user()->id;
             $proposal->title = $request->input('title');
             $proposal->organization_name = $request->input('organization_name');
             $proposal->address = $request->input('address');
@@ -82,12 +74,62 @@ class ProposalController extends Controller
             $proposal->summary = $request->input('summary');
             $proposal->background = $request->input('background');
             $proposal->activities = $request->input('activities');
-            $proposal->budget =$fileNameToStore;
+            $proposal->budget =$request->input('budget');
+            $proposal->save();
+
+
+           Session::flash('alert-success','Success!Draft saved!.');
+
+           Return redirect()->route('home');
+
+
+
+                break;
+
+                case 'send': 
+                    //action for send
+            $proposal=new Proposal;
+
+            $proposal->user_id = Auth::user()->id;
+            $proposal->title = $request->input('title');
+            $proposal->organization_name = $request->input('organization_name');
+            $proposal->address = $request->input('address');
+            $proposal->phone = $request->input('phone');
+            $proposal->email = $request->input('email');
+            $proposal->submitted_by_name = $request->input('submitted_by_name');
+            $proposal->summary = $request->input('summary');
+            $proposal->background = $request->input('background');
+            $proposal->activities = $request->input('activities');
+            $proposal->budget =$request->input('budget');
+            $proposal->submitted_at=now();
            $proposal->save();
+
+                //sending the notification of a newly created proposal to admin dashbord
+
+         
+           $user=User::find(17);
+
+        $user->notify(new NewProposal);
+
+           Session::flash('alert-success','Success!Proposal Send.');
+
+           Return redirect()->route('home');
+
+           //on sending proposal disable the send button
+
+
+                break;
+
+                
+            }
+
+            
                
 
-              }
-    
+
+   }
+  
+
 
     /**
      * Display the specified resource.
@@ -97,8 +139,7 @@ class ProposalController extends Controller
      */
     public function show($id)
     {
-        $proposal=Proposal::find($id);
-        return view('Proposals.show',compact('proposal'));
+       
     }
 
     /**
@@ -121,7 +162,7 @@ class ProposalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      
     }
 
     /**

@@ -3,17 +3,28 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use App\Proposal;
+use App\User;
 
 class ExampleTest extends TestCase
 {
+	use DatabaseMigrations;
     /**
-     * A basic test example.
+     * @test
      *
-     * @return void
+     * @group current
      */
-    public function testBasicTest()
+    public function can_create_proposal()
     {
-        $this->assertTrue(true);
+    	$user = factory(User::class)->create();
+    	$proposals = $user->proposals()->saveMany(factory(Proposal::class, 10)->make());
+    	$submitted = $proposals->random(6)->each(function($proposal){
+    		$proposal->submitted_at = now();
+    		$proposal->save();
+    	});
+    	$drafts = Proposal::whereNotIn('id', $submitted->pluck('id')->toArray())->get();
+
+    	$this->assertTrue($drafts->count() == Proposal::query()->whereDraft()->get()->count());
     }
 }

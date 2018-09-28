@@ -21,11 +21,27 @@ Route::post('/login/custom','LoginController@login')->name('login.custom');
 
 //Route group protected by auth middleware
 Route::group(['middleware'=>'auth'], function(){
-	Route::get('/home',function(){
-		return view('home');
-	})->name('home');
+	
+	Route::get('/admin/dashboard','AdminController@index')->name('admin.index');
 
-	Route::get('/admin/dashboard','ProposalController@index')->name('admin.dashboard');
+	Route::get('/admin/dashboard/showNewProposal/{id}','AdminController@showNewProposal')->name('admin.showNewProposal');
+
+	Route::post('/admin/dashboard/updateProposalStatus/{id}','AdminController@proposalUpdates')->name('admin.proposalUpdates');
+
+	Route::get('/admin/dashboard/newProposals','AdminController@uprocessedProposals')->name('admin.newProposals');
+
+	Route::get('/admin/dashboard/Stage-1-Proposals','AdminController@Stage_1_Proposals')->name('admin.Stage_1_Proposals');
+
+	Route::get('/admin/dashboard/showStage1Proposal/{id}','AdminController@showStage1Proposal')->name('admin. showStage1Proposal');
+
+	Route::get('/admin/dashboard/Stage-2-Proposals','AdminController@Stage_2_Proposals')->name('admin.Stage_2_Proposals');
+
+	Route::get('/admin/dashboard/showStage2Proposal/{id}','AdminController@showStage2Proposal')->name('admin. showStage2Proposal');
+
+	Route::get('/admin/dashboard/AcceptedProposals','AdminController@AcceptedProposals')->name('admin.AcceptedProposals');
+
+	Route::get('/admin/dashboard/RejectedProposals','AdminController@RejectedProposals')->name('admin.RejectedProposals');
+	
 });
 
 Route::get('verifyEmailFirst','Auth\RegisterController@verifyEmailFirst')->name('verifyEmailFirst');
@@ -36,3 +52,8 @@ Route::resources([
     'proposals' => 'ProposalController'
     
 ]);
+
+Route::get('proposal/viewSavedDrafts','ProposalDraftController@viewSavedDrafts')->name('viewSavedDrafts');
+
+Route::get('proposal/{id}/EditDraft','ProposalDraftController@EditDraft')->name('EditDraft');
+
