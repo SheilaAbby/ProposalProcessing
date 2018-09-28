@@ -13,6 +13,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/mycss')}}>
+<link rel="stylesheet" href="{{asset('/css/font-awesome.min.css')}}">
+
 
 </head>
 <body>
@@ -64,7 +66,45 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
-                        <li><a><i class="icon-notification"></i></a></li>
+                        <li><a></a></li>
+
+                        <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
+                                    <i class="fa fa-bell-o fa-2x" aria-hidden="true" style="color:green"></i>
+
+                                    @if(auth()->user()->unreadNotifications->count())
+                                    <span class="badge badge-light">{{auth()->user()->unreadNotifications->count()}}</span>
+                                    @endif
+                                </a>
+
+                                <ul class="dropdown-menu">
+
+                                        <!--admin must be an authenticated user-->
+                                    @foreach(auth()->user()->notifications as $notification)
+
+                                <li><a href="{{route('admin.newProposals')}}">{{$notification->data['data']}} </a></li>    
+
+                                    @endforeach
+                                    
+                                </ul>
+
+                                 <ul class="dropdown-menu">
+                                        <li><a style="color:green" href="{{route('markRead')}}">Mark All as Read</a></li>
+                                        <!--admin must be an authenticated user-->
+                                    @foreach(auth()->user()->unreadNotifications as $notification)
+
+                                <li style="background-color: lightgray"><a href="{{route('admin.newProposals')}}">{{$notification->data['data']}} </a></li>    
+
+                                    @endforeach
+
+                                     @foreach(auth()->user()->readNotifications as $notification)
+
+                                <li><a href="{{route('admin.newProposals')}}">{{$notification->data['data']}} </a></li>    
+
+                                    @endforeach
+                                    
+                                </ul>
+                            </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

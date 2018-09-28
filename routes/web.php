@@ -41,6 +41,13 @@ Route::group(['middleware'=>'auth'], function(){
 	Route::get('/admin/dashboard/AcceptedProposals','AdminController@AcceptedProposals')->name('admin.AcceptedProposals');
 
 	Route::get('/admin/dashboard/RejectedProposals','AdminController@RejectedProposals')->name('admin.RejectedProposals');
+
+	//marking sent proposals as read
+
+	Route::get('markAsRead',function(){
+		auth()->user()->unreadNotifications->markAsRead();
+		return redirect()->back();
+	})->name('markRead');
 	
 });
 

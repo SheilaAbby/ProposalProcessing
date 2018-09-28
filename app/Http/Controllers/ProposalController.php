@@ -109,7 +109,7 @@ class ProposalController extends Controller
          
            $user=User::find(17);
 
-        $user->notify(new NewProposal);
+         $user->notify(new NewProposal);
 
            Session::flash('alert-success','Success!Proposal Send.');
 

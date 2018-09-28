@@ -84,7 +84,7 @@
                 
                 <div class="title m-b-md">
                     OneLove<br>
-                    Proposal Submission Site
+                    Proposal Submission Site.
                 </div>
                    
                 </div>

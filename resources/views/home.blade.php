@@ -22,7 +22,7 @@
 
                             <div  id="form-hide" >
                     
-                         <form class="form-horizontal" method="POST" action="{{ route('proposals.store') }}" >
+                         <form class="form-horizontal" method="POST" action="{{ route('proposals.store') }}" class="form-disable">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -201,7 +201,7 @@
 
         @endforeach
             @else
-                <p> You have no accepted Proposals yet.</p>
+                <p> You have no accepted Proposals yet</p>
         @endif
 
     

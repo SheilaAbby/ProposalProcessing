@@ -1,3 +1,5 @@
-$("Button2").submit(function() {
-    $(this).find('input[type="submit"]').prop("disabled", true);
-});
+$(.form-disable).on('submit',function(){
+	console.log('submitted');
+
+	return false;
+})
