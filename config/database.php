@@ -1,10 +1,7 @@
 <?php
 
- $url = parse_url(getenv("DATABASE_URL"));
- $host = $url["host"]?? null;
- $username =$url["pass"]??;
- $password = $url["pass"]??;
- $database = substr($url["path"],1)??;
+ $DATABASE_URL=parse_url('postgres://sshyeubadkvcgk:0dd5ada7124ea8bf5eb8af7bc6cdd64cecab6e8189fca1514dfd53b681eb8280@ec2-54-243-147-162.compute-1.amazonaws.com:5432/d93m0bttvnf7dq');
+
 
 return [
 
@@ -19,9 +16,7 @@ return [
     |
     */
 
-
-
-    'default' => env('DB_CONNECTION', 'pgsql_production'),
+    'default' => env('DB_CONNECTION', 'pgsql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,27 +58,18 @@ return [
         ],
 
         'pgsql' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+
+            driver' => 'pgsql',
+            'host' => $DATABASE_URL["host"],
+            'port' => $DATABASE_URL["port"],
+            'database' => ltrim($DATABASE_URL["path"], "/"),
+            'username' => $DATABASE_URL["user"],
+            'password' => $DATABASE_URL["pass"],
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-            'sslmode' => 'prefer',
-        ],
-        'pgsql_production' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'public',
-           
+            'sslmode' => 'require',
+            
         ],
 
         'sqlsrv' => [
