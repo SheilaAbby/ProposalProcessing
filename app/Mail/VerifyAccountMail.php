@@ -12,6 +12,7 @@ use App\User;
 class VerifyAccountMail extends Mailable
 {
     use Queueable, SerializesModels;
+      public $user;
 
     /**
      * Create a new message instance.
@@ -19,7 +20,7 @@ class VerifyAccountMail extends Mailable
      * @return void
      */
 
-    public $user;
+  
     public function __construct(User $user)
     {
         $this->user=$user;

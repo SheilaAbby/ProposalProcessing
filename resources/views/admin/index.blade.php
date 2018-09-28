@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-md-12 margin-tb">
 
-            
-            <a href="{{route('admin.newProposals')}}"><button>See New Proposals</button></a></a>&nbsp;&nbsp;&nbsp;
-             <a href="{{route('admin.Stage_1_Proposals')}}"><button>See Stage 1 Proposals</button></a>&nbsp;&nbsp;&nbsp;
-             <a href="{{route('admin.Stage_2_Proposals')}}"><button>See Stage 2 Proposals</button></a>&nbsp;&nbsp;&nbsp;
-             <a href="{{route('admin.AcceptedProposals')}}"><button>See Accepted Proposals</button></a>&nbsp;&nbsp;&nbsp;
-             <a href="{{route('admin.RejectedProposals')}}"><button>See Rejected Proposals</button></a>&nbsp;&nbsp;&nbsp;
+          
+            <a href="{{route('admin.newProposals')}}"><button   style="font-weight:bold; text-shadow">See New Proposals</button></a></a>&nbsp;&nbsp;&nbsp;
+             <a href="{{route('admin.Stage_1_Proposals')}}"><button  style="font-weight:bold; text-shadow">See Stage 1 Proposals</button></a>&nbsp;&nbsp;&nbsp;
+             <a href="{{route('admin.Stage_2_Proposals')}}" style="font-weight:bold; text-shadow"><button>See Stage 2 Proposals</button></a>&nbsp;&nbsp;&nbsp;
+             <a href="{{route('admin.AcceptedProposals')}}"><button style="font-weight:bold; text-shadow">See Accepted Proposals</button></a>&nbsp;&nbsp;&nbsp;
+             <a href="{{route('admin.RejectedProposals')}}"><button style="font-weight:bold; text-shadow">See Rejected Proposals</button></a>&nbsp;&nbsp;&nbsp;
             </div><br>
         
             <div class="panel panel-default float-left">

@@ -9,6 +9,7 @@ use Notification;
 use App\Notifications\NewProposal;
 use Session;
 use Auth;
+use DB;
 
 class ProposalController extends Controller
 {
@@ -60,7 +61,7 @@ class ProposalController extends Controller
 
          switch($request->submitButton) {
 
-             case 'save-draft': 
+             case 'Draft': 
                     //action for save-draft.
               $proposal=new Proposal;
 
@@ -86,7 +87,7 @@ class ProposalController extends Controller
 
                 break;
 
-                case 'send': 
+                case 'Send': 
                     //action for send
             $proposal=new Proposal;
 
@@ -105,11 +106,11 @@ class ProposalController extends Controller
            $proposal->save();
 
                 //sending the notification of a newly created proposal to admin dashbord
-
+            
          
-           $user=User::find(17);
+           $user=User::find(32);
 
-         $user->notify(new NewProposal);
+            $user->notify(new NewProposal);
 
            Session::flash('alert-success','Success!Proposal Send.');
 

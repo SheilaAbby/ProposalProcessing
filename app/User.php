@@ -42,9 +42,9 @@ class User extends Authenticatable
         return false;
     }
 
-    public function proposal()
+    public function proposals()
     {
-        return $this->hasOne('App\Proposal');
+        return $this->hasMany('App\Proposal');
     }
 
 

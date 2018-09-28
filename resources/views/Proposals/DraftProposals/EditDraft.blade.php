@@ -164,7 +164,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit"  name="submitButton" class="btn btn-primary" value="send" >
+                                <button type="submit"  name="submitButton" class="btn btn-primary" value="Send" >
                                   Send Proposal
                                 </button>
                             </div>

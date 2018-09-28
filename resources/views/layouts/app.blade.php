@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('/css/mycss')}}>
+    <link rel="stylesheet" href="{{asset('/css/font-awesome.min.css')}}">
 
 </head>
 <body>
@@ -43,8 +44,8 @@
                         <div class="dropdown">
                 <button class="dropbtn">Contact Us</button>
                  <div class="dropdown-content">
-                         <b>Call:0717711324
-                         Email:onelove@onelove.com</b>
+                         <b>Call:0717711324</b>
+                         <a href="#"><i class="fa fa-envelope fa-2x"></i>onelove@onelove.com</a>
                     </div>
                     </div>
                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -108,6 +109,15 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="{{asset('js/myjs.js')}}"></script>
+    <script type="text/javascript">
+        function buttonDisable(){
+        $('#submit').click(function() {
+        $(this).attr('disabled', true);
+    });
+        return true;
+    }
+
+    </script>
 
 
    

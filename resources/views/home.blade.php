@@ -4,7 +4,7 @@
 <div class="container">
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
       <h1 class="display-4"> Welcome to OneLove,Proposal Submission site.</h1>
-      <p class="lead">If your proposal aims at making the world a better place,has the potential to benefit a non-profit organization like OneLove,and you are seeking a grant,feel free to submit your proposal for review.</p>
+      <b><p class="lead" style="color: green">If your proposal aims at making the world a better place,has the potential to benefit a non-profit organization like OneLove,and you are seeking a grant,feel free to submit your proposal for review.</p></b>
     </div>
    
         <div class="col-md-6">
@@ -22,7 +22,7 @@
 
                             <div  id="form-hide" >
                     
-                         <form class="form-horizontal" method="POST" action="{{ route('proposals.store') }}" class="form-disable">
+                         <form class="form-horizontal" method="POST" action="{{ route('proposals.store') }}"  onsubmit="return buttonDisable()" >
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
@@ -168,13 +168,11 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" name="submitButton" class="btn btn-primary" value="save-draft">
-                                   Save as draft
-                                </button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input  type="submit" name="submitButton" class="btn btn-primary" id="submit"  value="Draft"/>
+                                
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                 <button type="submit"  id="Button2" name="submitButton" class="btn btn-primary" value="send" >
-                                  Send
-                                </button>
+                                 <input type="submit"  id="submit" name="submitButton" class="btn btn-primary" value="Send"/>
                             </div>
                             </div>
                         </form>
@@ -187,10 +185,10 @@
 
              <div>
                <a href="{{route('viewSavedDrafts')}}"><button float-right >See Saved Drafts</button></a>
-        </div>
-
-<div class="container">
-     <b><h4 class="my-0 font-weight-normal">Accepted Proposal</h4></b>
+        </div><br><br>
+                <div class="container">
+                <div class="well well-sm col-md-6">
+     <u><b><h4 class="my-0 font-weight-normal">Accepted Proposal</h4></b></u>
     
           @if(count($acceptedProposal )>0)
                 @foreach($acceptedProposal as $proposal)
@@ -206,13 +204,13 @@
 
     
     
-            <b><h4 class="my-0 font-weight-normal">Rejected Proposal</h4></b>
+            <u><b><h4 class="my-0 font-weight-normal">Rejected Proposal</h4></b></u>
           
           @if(count($rejectedProposal )>0)
                 @foreach($rejectedProposal as $proposal)
               
                   <b>Title: </b><p>{{$proposal->title}} </p><br>
-                 <b>Proposal:  </b><p>{{$proposal->summary}} </p>
+                 <b>Proposal:</b><p>{{$proposal->summary}} </p>
              
 
         @endforeach
@@ -221,6 +219,7 @@
         @endif
 
           
+</div>
 </div>
 </div>
 
